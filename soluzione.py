@@ -51,7 +51,7 @@ class SmartVacuum(Problem):
 
     pippo[len(pippo)-1] = self.F_index
 
-    super().__init__(self.initial, goal=pippo)
+    super().__init__(tuple(self.initial), goal=pippo)
 
   def goal_test(self, state):
     return state == self.goal
@@ -122,7 +122,7 @@ class SmartVacuum(Problem):
       cursor += moving[action]
 
     out_state = new_state + [cursor]
-    return out_state
+    return tuple(out_state)
 
 
     def goal_test(self, state):
