@@ -134,10 +134,11 @@ def printimg(filename, box):
   cv2_imshow(resize)
   cv.imwrite(filename, resize)
 
-  orig = Image.open("photo.jpg")
-im, box = boxes(orig)
 
-def main (im):
+def main():
+    orig = Image.open("photo.jpg")
+    im, box = boxes(orig)
+  
     # Draw perfect rectangles and the component centroid.
     img = Image.fromarray(im)
     visual = img.convert('RGB')
