@@ -51,17 +51,12 @@ class SmartVacuum(Problem):
 
     pippo[len(pippo)-1] = self.F_index
 
-    super().__init__(tuple(self.initial), goal=pippo)
+    super().__init__(self.initial, goal=pippo)
 
   def goal_test(self, state):
     return state == self.goal
 
   def actions(self, state):
-
-    if(self.goal_test(state)):
-      while True:
-          print("ciao bello")
-      print("Trovato")
 
     cursor = state[self.Robot_index]
 
@@ -97,8 +92,6 @@ class SmartVacuum(Problem):
 
   def result(self, state, action):
 
-    print(type(self.goal))
-
     #index of robot
     cursor = state[self.Robot_index]
     print(action)
@@ -122,13 +115,11 @@ class SmartVacuum(Problem):
       cursor += moving[action]
 
     out_state = new_state + [cursor]
-    return tuple(out_state)
+    return out_state
 
 
     def goal_test(self, state):
       if (state == self.goal):
-        while True:
-          print(True)
         return True
       else:
         return False
@@ -193,3 +184,60 @@ def visual(path_solution, move_solution, w, h):
 
   out = widgets.interactive_output(f, {'a': a})
   display(ui, out)
+def breadth_search_graph(problem):
+  node = Node(problem.initial)
+
+  if problem.goal_test(node.state):
+    return node
+
+  frontier = deque([node])
+  explored = set()
+
+  while frontier:
+    node = frontier.popleft()
+    explored.add(tuple(node.state))
+    for child in node.expand(problem):
+      if tuple(child.state) not in explored and child not in frontier:
+        if problem.goal_test(child.state):
+          return child
+        frontier.append(child)
+  return None
+
+def best_first_search_graph(problem, f, no_memoize = False):
+  init = Node(problem.initial)
+
+  if problem.goal_test(init.state):
+    return init
+
+  f = memoize(f, 'f')
+  frontier = PriorityQueue('min', f)
+  frontier.append(init)
+
+  explored = set()
+
+  while frontier:
+    node = frontier.pop()
+    if problem.goal_test(node.state):
+        return node
+
+    explored.add(tuple(node.state))
+
+    for child in node.expand(problem):
+      if tuple(child.state) not in explored and child not in frontier:
+        frontier.append(child)
+      elif child in frontier:
+        incumbent = frontier.get_item(child)
+        if f(incumbent) > f(child):
+          del frontier[incumbent]
+          frontier.append(child)
+    print(f"heuristic: {f(node)}")
+  return None
+
+def a_star_search(problem, h = None):
+  h = memoize(h or problem.h, 'h')
+  return best_first_search_graph(problem, lambda n : h(n), no_memoize = False)
+
+#conto le celle diverse dallo stato attuale allo stato goal
+def h1(problem, node):
+  return sum( s != g for (s,g) in zip(node.state, problem.goal) )
+
