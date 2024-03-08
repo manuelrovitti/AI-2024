@@ -96,7 +96,7 @@ class SmartVacuum(Problem):
     cursor = state[self.Robot_index]
     #print(action)
     print(state)
-    print('da pulire' + state[:len(state)-1].count(2))
+    print('da pulire' + str(state[:len(state)-1].count(2)))
     #print(cursor)
 
     #transform tuple in list for coloring or switching position
