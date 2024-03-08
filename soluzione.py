@@ -94,9 +94,10 @@ class SmartVacuum(Problem):
 
     #index of robot
     cursor = state[self.Robot_index]
-    #print(action)
+    print(action)
     print(state)
-    print('da pulire' + str(state[:len(state)-1].count(2)))
+    print('Stanze da pulire: ' + str(state[:len(state)-1].count(2)))
+    print('Stanze da Super pulire: ' + str(state[:len(state)-1].count(3)))
     #print(cursor)
 
     #transform tuple in list for coloring or switching position
