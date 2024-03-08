@@ -95,7 +95,7 @@ class SmartVacuum(Problem):
     #index of robot
     cursor = state[self.Robot_index]
     #print(action)
-    #print(state)
+    print(state)
     #print(cursor)
 
     #transform tuple in list for coloring or switching position
