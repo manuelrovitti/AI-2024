@@ -139,7 +139,8 @@ W[::], B[::], BK[::], WALL[::], G[::], R[::] = (255,255,255),(88,57,38),(0,0,0),
 W_T[::], B_T[::], BK_T[::], G_T[::], R_T[::] = (255,255,255),(88,57,38),(0,0,0),(34,139,34),(255,0,0)
 W_T[1,1] = B_T[1,1] = BK_T[1,1] = G_T[1,1] = R_T[1,1] = (255, 0, 0)
 
-color = [G, W, B, BK, WALL, R, G_T, W_T, B_T, BK_T, R_T]
+color = [G, W, B, BK, WALL, R,
+       G_T, W_T, B_T, BK_T, WALL, R_T]
 
 def visual(path_solution, move_solution, w, h):
 
